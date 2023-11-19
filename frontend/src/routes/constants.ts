@@ -5,6 +5,7 @@ export const PUBLIC_ROUTES = {
 
 export const USER_ROUTES = {
   home: "/",
+  landingPage: "/landing-page",
 };
 
 export const ADMIN_PREFIX = "/admin";

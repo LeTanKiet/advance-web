@@ -12,9 +12,13 @@ const initialState: AppState = {
 export const appSlice = createSlice({
   name: "app",
   initialState,
-  reducers: {},
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+  },
 });
 
-// export const {} = appSlice.actions;
+export const appActions = appSlice.actions;
 
 export default appSlice.reducer;

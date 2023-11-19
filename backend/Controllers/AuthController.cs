@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http;
 using System.Xml.Schema;
 using System.Security.Cryptography;
 using backend.Services;
+using backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -28,39 +30,50 @@ namespace backend.Controllers
             _userService = userService;
         }
 
-        [HttpGet, Authorize]
-        public ActionResult<string> GetMyName()
-        {
-            return Ok(_userService.GetMyName());
-
-            //var userName = User.Identity?.Name;
-            //var roleClaims = User.FindAll(ClaimTypes.Role);
-            //var roles = roleClaims.Select(c => c.Value).ToList();
-            //var roles2 = User?.Claims
-            //    .Where(c => c.Type == ClaimTypes.Role)
-            //    .Select(c => c.Value)
-            //    .ToList();
-
-            //return Ok(new { userName, roles });
-        }
-
         [HttpPost("register")]
         public ActionResult<User> Register(UserDto request)
         {
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
 
-            user.Username = request.Username;
-            user.Password = passwordHash;
+            using var context = new AppDbContext();
 
-            return Ok(user);
+            var user = (from u in context.users
+                         where u.Username == request.Username
+                         select u).FirstOrDefault();
+
+            if(user != null)
+            {
+                return BadRequest("Exists user");
+            }
+
+            var newUser = new User
+            {
+                Username = request.Username,
+                Password = passwordHash
+            };
+            string token = CreateToken(newUser);
+            newUser.RefreshToken = token;
+
+            context.Add(newUser);
+            context.SaveChanges();
+
+
+            return Ok(newUser);
         }
 
         [HttpPost("login")]
         public ActionResult<User> Login(UserDto request)
         {
-            if (user.Username != request.Username)
+            using var context = new AppDbContext();
+
+            var user = (from u in context.users
+                        where u.Username == request.Username
+                        select u).FirstOrDefault();
+
+            if(user == null )
             {
                 return BadRequest("User not found.");
+
             }
 
             if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
@@ -72,7 +85,7 @@ namespace backend.Controllers
             var refreshToken = GenerateRefreshToken();
             SetRefreshToken(refreshToken);
 
-            return Ok(token);
+            return Ok(user);
         }
 
         [HttpPost("refresh")]
@@ -96,6 +109,30 @@ namespace backend.Controllers
 
             return Ok(token);
         }
+
+
+        [HttpPut("profile"), Authorize]
+        public ActionResult<User> Update(UserDto request)
+        {
+            using var context = new AppDbContext();
+
+            var user = (from u in context.users
+                        where u.Id == request.Id
+                        select u).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.Username = request.Username;
+                string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                user.Password = passwordHash;
+            }
+
+            context.SaveChanges();
+
+            return Ok(user);
+        }
+
+
 
         private RefreshToken GenerateRefreshToken()
         {

@@ -1,33 +1,44 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet, RouteObject, useLocation } from "react-router-dom";
 import { useAppSelector } from "../hooks/redux";
 import { PUBLIC_ROUTES } from "./constants";
-import AdminRoutes from "./AdminRoutes";
-import UserRoutes from "./UserRoutes";
+import adminRoutes from "./AdminRoutes";
+import userRoutes from "./UserRoutes";
+import { Role } from "../utils/enum";
 
-const PrivateRoutes = () => {
+const ProtectedLayout = () => {
+  const user = useAppSelector((state) => state.app.user);
+  const { pathname } = useLocation();
+
+  if (!user && !Object.values(PUBLIC_ROUTES).includes(pathname))
+    return <Navigate to={PUBLIC_ROUTES.signIn} />;
+
+  return <Outlet />;
+};
+
+function PrivateRoutes() {
   const user = useAppSelector((state) => state.app.user);
 
-  if (!user) return <Navigate to={PUBLIC_ROUTES.signIn} />;
-
-  let RoutesComp = null;
+  let routes: RouteObject[] = [];
 
   switch (user?.role) {
-    case "user":
-      RoutesComp = UserRoutes;
+    case Role.USER:
+      routes = userRoutes;
       break;
-    case "admin":
-      RoutesComp = AdminRoutes;
+    case Role.ADMIN:
+      routes = adminRoutes;
       break;
     default:
-      RoutesComp = () => (
-        <>
-          <UserRoutes />
-          <AdminRoutes />
-        </>
-      );
+      routes = [...userRoutes, ...adminRoutes];
   }
 
-  return <RoutesComp />;
-};
+  routes = [
+    {
+      element: <ProtectedLayout />,
+      children: routes,
+    },
+  ];
+
+  return routes;
+}
 
 export default PrivateRoutes;

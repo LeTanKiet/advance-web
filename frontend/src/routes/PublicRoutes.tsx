@@ -1,15 +1,10 @@
-import { RouteObject, useRoutes } from "react-router-dom";
-import NotFound from "../pages/NotFound";
+import { RouteObject } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import { PUBLIC_ROUTES } from "./constants";
 
 const publicRoutes: RouteObject[] = [
-  {
-    element: <NotFound />,
-    path: "*",
-  },
   {
     element: <AuthLayout />,
     children: [
@@ -19,9 +14,4 @@ const publicRoutes: RouteObject[] = [
   },
 ];
 
-const PublicRoutes = () => {
-  const element = useRoutes(publicRoutes);
-  return element;
-};
-
-export default PublicRoutes;
+export default publicRoutes;

@@ -7,17 +7,17 @@ namespace backend.Data
     {
         private readonly IConfiguration _configuration;
 
-        public AppDbContext(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        //public AppDbContext(IConfiguration configuration)
+        //{
+        //    _configuration = configuration;
+        //}
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("WebApiDatabase"));
+            optionsBuilder.UseNpgsql("Host=rain.db.elephantsql.com;Username=kzpailsy;Password=jxc2hcRI2wIcZHSYLdkBvs5sBN4oOHHK;Database=kzpailsy");
         }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> users { get; set; }
     }
 }

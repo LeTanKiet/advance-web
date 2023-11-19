@@ -1,17 +1,23 @@
-import { RouteObject, useRoutes } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 import Home from "../pages/user/Home";
 import { USER_ROUTES } from "./constants";
+import LandingPage from "../pages/user/LandingPage";
+import DefaultLayout from "../layouts/DefaultLayout";
 
 const userRoutes: RouteObject[] = [
   {
-    element: <Home />,
-    path: USER_ROUTES.home,
+    element: <DefaultLayout />,
+    children: [
+      {
+        element: <Home />,
+        path: USER_ROUTES.home,
+      },
+      {
+        element: <LandingPage />,
+        path: USER_ROUTES.landingPage,
+      },
+    ],
   },
 ];
 
-const UserRoutes = () => {
-  const element = useRoutes(userRoutes);
-  return element;
-};
-
-export default UserRoutes;
+export default userRoutes;

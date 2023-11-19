@@ -17,15 +17,15 @@ namespace backend.Models
         public string Password { get; set; } = string.Empty;
 
         [Column("role")]
-        public string Role {  get; set; } = string.Empty;
+        public string Role {  get; set; } = "user";
 
         [Column("refresh_token")]
         public string RefreshToken { get; set; } = string.Empty;
 
         [Column("token_created")]
-        public DateTime TokenCreated { get; set; }
+        public DateTime? TokenCreated { get; set; }
 
         [Column("token_expired")]
-        public DateTime TokenExpired { get; set; }
+        public DateTime? TokenExpired { get; set; }
     }
 }
