@@ -1,17 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TUser } from "../../types/auth";
 
-export interface AppState {}
+export interface AppState {
+  user: TUser | null;
+}
 
 const initialState: AppState = {
-  value: 0,
+  user: null,
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const appSlice = createSlice({
+  name: "app",
   initialState,
   reducers: {},
 });
 
-// export const {} = counterSlice.actions;
+// export const {} = appSlice.actions;
 
-export default counterSlice.reducer;
+export default appSlice.reducer;
