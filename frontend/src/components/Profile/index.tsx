@@ -17,6 +17,7 @@ const Profile = () => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       }),
+
     onSuccess: (data) => {
       dispatch(appActions.setUser(data));
       api.success({
@@ -30,29 +31,33 @@ const Profile = () => {
   };
 
   return (
-    <Form
-      name="basic"
-      initialValues={{ ...user }}
-      onFinish={onFinish}
-      autoComplete="off"
-      layout="vertical"
-      className="max-w-[600px]"
-    >
-      {contextHolder}
-      <Form.Item<LoginProps>
-        label="Username"
-        name="username"
-        rules={[{ required: true, message: "Please input your username!" }]}
-      >
-        <Input />
-      </Form.Item>
+    <div>
+      <h2 className="mt-8 mb-4">Update your profile</h2>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" loading={isPending}>
-          Update
-        </Button>
-      </Form.Item>
-    </Form>
+      <Form
+        name="basic"
+        initialValues={{ ...user }}
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="vertical"
+        className="max-w-[600px]"
+      >
+        {contextHolder}
+        <Form.Item<LoginProps>
+          label="Username"
+          name="username"
+          rules={[{ required: true, message: "Please input your username!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={isPending}>
+            Update
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 
