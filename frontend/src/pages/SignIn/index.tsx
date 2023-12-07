@@ -17,6 +17,7 @@ const SignIn = () => {
       localStorage.setItem("token", data.refreshToken);
     },
   });
+  console.log("🚀 ~ file: index.tsx:20 ~ SignIn ~ error:", error);
 
   const onFinish = (values: LoginProps) => {
     mutate(values);
@@ -34,9 +35,9 @@ const SignIn = () => {
         layout="vertical"
       >
         <Form.Item<LoginProps>
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
         >
           <Input />
         </Form.Item>

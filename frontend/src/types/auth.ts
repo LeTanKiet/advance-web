@@ -2,18 +2,18 @@ import { Role } from "../utils/enum";
 
 export type TUser = {
   id: number;
-  username: string;
+  email: string;
   password: string;
   role: Role;
 };
 
 export type LoginProps = {
-  username: string;
+  email: string;
   password: string;
 };
 
 export type SignUpProps = {
-  username: string;
+  email: string;
   password: string;
   confirmPassword: string;
 };

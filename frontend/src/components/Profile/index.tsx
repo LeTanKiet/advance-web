@@ -44,9 +44,9 @@ const Profile = () => {
       >
         {contextHolder}
         <Form.Item<LoginProps>
-          label="Username"
-          name="username"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Please input your email!" }]}
         >
           <Input />
         </Form.Item>

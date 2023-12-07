@@ -2,7 +2,7 @@ import axios from "axios";
 import { SERVER_URL } from "../utils/constants";
 
 const axiosClient = axios.create({
-  baseURL: `${SERVER_URL}/api`,
+  baseURL: `${SERVER_URL}`,
   headers: {
     "Content-Type": "application/json; charset=utf-8",
   },

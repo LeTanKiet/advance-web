@@ -6,9 +6,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className="text-center">
-        Hello {user.username}, welcome to home page
-      </h1>
+      <h1 className="text-center">Hello {user.email}, welcome to home page</h1>
       <Profile />
     </div>
   );
