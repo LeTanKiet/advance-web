@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-  const Filter = sequelize.define(
+  const User = sequelize.define(
     'User',
     {
       email: { type: DataTypes.STRING, allowNull: false },
@@ -16,9 +16,9 @@ export default (sequelize) => {
     },
   );
 
-  // Filter.associate = (models) => {
-  //   Filter.belongsTo(models.Roadmap, { as: 'roadmap', foreignKey: 'roadmapId', targetKey: 'id' });
-  // };
+  User.associate = (models) => {
+    User.hasMany(models.ClassUser, { as: 'classUsers', foreignKey: 'userId', targetKey: 'id' });
+  };
 
-  return Filter;
+  return User;
 };

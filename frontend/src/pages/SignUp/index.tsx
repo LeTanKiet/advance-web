@@ -12,9 +12,8 @@ const SignUp = () => {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: authApi.signUp,
-    onSuccess: (data: any) => {
+    onSuccess: (data) => {
       dispatch(appActions.setUser(data));
-      localStorage.setItem("token", data.refreshToken);
     },
   });
 

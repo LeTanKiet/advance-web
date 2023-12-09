@@ -6,6 +6,7 @@ const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json; charset=utf-8",
   },
+  withCredentials: true,
 });
 
 axiosClient.interceptors.response.use((response) => response.data);

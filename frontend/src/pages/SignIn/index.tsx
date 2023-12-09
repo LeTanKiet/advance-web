@@ -12,9 +12,8 @@ const SignIn = () => {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: authApi.login,
-    onSuccess: (data: any) => {
+    onSuccess: (data) => {
       dispatch(appActions.setUser(data));
-      localStorage.setItem("token", data.refreshToken);
     },
   });
   console.log("🚀 ~ file: index.tsx:20 ~ SignIn ~ error:", error);

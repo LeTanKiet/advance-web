@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
 import User from './user.model.js';
+import Classes from './class.model.js';
+import ClassUser from './class_user.model.js';
 
 const applyExtra = (sequelize) => {
   const { models } = sequelize;
@@ -12,7 +14,7 @@ const applyExtra = (sequelize) => {
 
 const sequelize = new Sequelize(process.env.CONNECTION_STRING);
 
-const modelDefiners = [User];
+const modelDefiners = [User, Classes, ClassUser];
 
 modelDefiners.forEach((modelDefiner) => modelDefiner(sequelize));
 
