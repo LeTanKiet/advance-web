@@ -1,8 +1,21 @@
-import pgPromise from 'pg-promise';
-const pgp = pgPromise();
+import { Sequelize } from 'sequelize';
+import User from './user.model.js';
 
-import { connectStr } from '../configs/connectStr.js';
+const applyExtra = (sequelize) => {
+  const { models } = sequelize;
+  Object.keys(models).forEach((modelName) => {
+    if (models[modelName].associate) {
+      models[modelName].associate(models);
+    }
+  });
+};
 
-const db = pgp(connectStr);
+const sequelize = new Sequelize(process.env.CONNECTION_STRING);
 
-export { db };
+const modelDefiners = [User];
+
+modelDefiners.forEach((modelDefiner) => modelDefiner(sequelize));
+
+applyExtra(sequelize);
+
+export default sequelize;
