@@ -1,5 +1,4 @@
 import ClassList from "../../../components/ClassList";
-import Profile from "../../../components/Profile";
 import { useAppSelector } from "../../../hooks/redux";
 
 const Home = () => {

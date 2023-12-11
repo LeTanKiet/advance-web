@@ -19,8 +19,8 @@ export const createToken = (user) => {
 };
 
 export const setCookies = (res, tokens) => {
-  res.cookie('access_token', tokens.accessToken);
-  res.cookie('refresh_token', tokens.refreshToken);
+  res.cookie('access_token', tokens.accessToken, { secure: true, sameSite: 'None' });
+  res.cookie('refresh_token', tokens.refreshToken, { secure: true, sameSite: 'None' });
 };
 
 export const clearCookies = (res) => {

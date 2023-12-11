@@ -6,6 +6,7 @@ import { useState } from "react";
 import classApi from "../../api/classApi";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { classActions } from "../../redux/class/slice";
+import { TClass } from "../../types/class";
 
 const CreateButton = () => {
   const [form] = useForm();
@@ -34,7 +35,7 @@ const CreateButton = () => {
     },
   ];
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: TClass) => {
     console.log("Success:", values);
     createClassMutation.mutate(values);
   };

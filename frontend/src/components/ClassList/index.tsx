@@ -20,7 +20,7 @@ const ClassList = () => {
     if (classes) {
       dispatch(classActions.setClassList(classes));
     }
-  }, [classes]);
+  }, [classes, dispatch]);
 
   if (!classes || classList?.length === 0)
     return <p className="text-center mt-4">No class found</p>;

@@ -11,7 +11,7 @@ const Profile = () => {
   const [api, contextHolder] = notification.useNotification();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (data: any) => authApi.updateProfile(data),
+    mutationFn: (data: unknown) => authApi.updateProfile(data),
 
     onSuccess: (data) => {
       dispatch(appActions.setUser(data));

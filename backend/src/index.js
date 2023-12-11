@@ -9,7 +9,7 @@ import cors from 'cors';
 
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://advance-web-alpha.vercel.app'],
     credentials: true,
   }),
 );

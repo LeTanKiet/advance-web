@@ -61,7 +61,9 @@ const ClassDetail = () => {
             </h2>
             <div className="mt-5 flex flex-col gap-4">
               {users
-                ?.filter((user) => user.id === currentClass.owner)
+                ?.filter(
+                  (user) => currentClass && user.id === currentClass.owner
+                )
                 .map((user) => (
                   <div className="flex items-center gap-4">
                     <Avatar size="large" icon={<UserOutlined />} />
