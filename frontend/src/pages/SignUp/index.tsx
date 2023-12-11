@@ -27,7 +27,6 @@ const SignUp = () => {
 
       <Form
         name="basic"
-        initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
         layout="vertical"
@@ -59,7 +58,9 @@ const SignUp = () => {
         </Form.Item>
 
         {error && (
-          <p className="text-red-500 mb-4">{(error as any).response.data}</p>
+          <p className="text-red-500 mb-4">
+            {(error as any).response.data.message}
+          </p>
         )}
 
         <Form.Item>

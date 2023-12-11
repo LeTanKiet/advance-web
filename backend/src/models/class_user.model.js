@@ -4,8 +4,8 @@ export default (sequelize) => {
   const ClassUser = sequelize.define(
     'ClassUser',
     {
-      userId: { type: DataTypes.STRING, allowNull: false },
-      classId: { type: DataTypes.STRING, allowNull: false },
+      userId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: false },
+      classId: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true, autoIncrement: false },
     },
     {
       tableName: 'class_user',

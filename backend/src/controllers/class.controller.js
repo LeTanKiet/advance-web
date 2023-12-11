@@ -1,37 +1,50 @@
 import { Op } from 'sequelize';
 import db from '../models/index.js';
 
-const { Class, ClassUser, User } = db.models;
+const { Class, ClassUser } = db.models;
 
 class ClassController {
   async create(req, res) {
     try {
-      const { title, description } = req.body;
+      const {
+        body: { title, description },
+        context: { userId },
+      } = req;
 
       const data = await Class.create({
         title,
         description,
+        owner: userId,
+      });
+
+      await ClassUser.create({
+        classId: data.id,
+        userId,
       });
 
       return res.status(200).json(data);
     } catch (error) {
+      console.log('🚀 ~ file: class.controller.js:27 ~ ClassController ~ create ~ error:', error);
       return res.status(500).send({ message: 'Create class fail!' });
     }
   }
 
   async getAll(req, res) {
     try {
-      const { userId } = req.query;
+      const {
+        context: { userId },
+      } = req;
 
+      let classes = [];
       // Improve this code by using include
       const classUsers = await ClassUser.findAll({
         where: { userId },
         attributes: { exclude: ['id'] },
       });
-      const classes = await Class.findAll({
+      classes = await Class.findAll({
         where: {
           id: {
-            [Op.or]: classUsers.map((d) => d.classId),
+            [Op.or]: classUsers.map((d) => d.classId).concat(0),
           },
         },
       });
@@ -64,10 +77,15 @@ class ClassController {
       const {
         params: { id },
       } = req;
+      console.log('🚀 ~ file: class.controller.js:73 ~ ClassController ~ deleteClass ~ context:', context);
 
-      await Class.destroy({
+      const number = await Class.destroy({
         where: { id },
       });
+
+      if (number === 0) {
+        return res.status(404).send({ message: 'Class not found' });
+      }
 
       return res.status(200).send({ message: 'Successfully' });
     } catch (error) {

@@ -6,6 +6,7 @@ export default (sequelize) => {
     {
       title: { type: DataTypes.STRING, allowNull: false },
       description: { type: DataTypes.STRING, allowNull: true },
+      owner: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       tableName: 'classes',

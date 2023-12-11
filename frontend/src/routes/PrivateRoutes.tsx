@@ -21,7 +21,7 @@ function PrivateRoutes() {
   let routes: RouteObject[] = [];
 
   switch (user?.role) {
-    case Role.USER:
+    case Role.STUDENT:
       routes = userRoutes;
       break;
     case Role.ADMIN:
