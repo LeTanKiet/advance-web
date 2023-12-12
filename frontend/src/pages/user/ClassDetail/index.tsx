@@ -10,15 +10,14 @@ const ClassDetail = () => {
   const { id } = useParams();
   const classList = useAppSelector((state) => state.class.list);
   const currentClass = classList.find((c) => c.id === Number(id));
-  console.log(
-    "🚀 ~ file: index.tsx:9 ~ ClassDetail ~ currentClass:",
-    currentClass
-  );
 
   const { data: users } = useQuery({
     queryKey: ["users", currentClass?.id],
     queryFn: () => userApi.getAll(currentClass?.id || 0),
   });
+  const students = users?.filter(
+    (user) => user.role === Role.STUDENT && user.id !== currentClass?.owner
+  );
 
   const onChange = (key: string) => {
     console.log(key);
@@ -36,7 +35,7 @@ const ClassDetail = () => {
                 "url(https://www.gstatic.com/classroom/themes/img_read.jpg)",
               backgroundSize: "cover",
             }}
-            className="h-[240px] relative"
+            className="h-[240px] relative mb-6 rounded-lg"
           >
             <div className="absolute bottom-6 left-6 text-white">
               <h2 className="text-4xl font-semibold uppercase">
@@ -46,6 +45,11 @@ const ClassDetail = () => {
                 {currentClass?.description}
               </p>
             </div>
+          </div>
+
+          <div className="flex gap-4 items-center px-5 py-3 shadow-main rounded-lg">
+            <Avatar size="large" icon={<UserOutlined />} />
+            <span>Announce something to your class</span>
           </div>
         </div>
       ),
@@ -78,14 +82,16 @@ const ClassDetail = () => {
               Students
             </h2>
             <div className="mt-5 flex flex-col gap-4">
-              {users
-                ?.filter((user) => user.role === Role.STUDENT)
-                .map((user) => (
+              {students && students.length > 0 ? (
+                students.map((user) => (
                   <div className="flex items-center gap-4">
                     <Avatar size="large" icon={<UserOutlined />} />
                     <span>{user.email}</span>
                   </div>
-                ))}
+                ))
+              ) : (
+                <span>No student in this class</span>
+              )}
             </div>
           </div>
         </div>

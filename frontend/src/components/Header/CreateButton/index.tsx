@@ -3,14 +3,15 @@ import { useMutation } from "@tanstack/react-query";
 import { Button, Dropdown, Form, Input, MenuProps, Modal } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useState } from "react";
-import classApi from "../../api/classApi";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { classActions } from "../../redux/class/slice";
-import { TClass } from "../../types/class";
+import classApi from "../../../api/classApi";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { classActions } from "../../../redux/class/slice";
+import { TClass } from "../../../types/class";
 
 const CreateButton = () => {
   const [form] = useForm();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const classList = useAppSelector((state) => state.class.list);
 
@@ -18,6 +19,14 @@ const CreateButton = () => {
     mutationFn: classApi.create,
     onSuccess: (data) => {
       setIsCreateModalOpen(false);
+      dispatch(classActions.setClassList([...classList, data]));
+    },
+  });
+
+  const joinClassMutation = useMutation({
+    mutationFn: classApi.joinClass,
+    onSuccess: (data) => {
+      setIsJoinModalOpen(false);
       dispatch(classActions.setClassList([...classList, data]));
     },
   });
@@ -31,13 +40,17 @@ const CreateButton = () => {
     },
     {
       key: "2",
-      label: <span>Join class</span>,
+      label: <span onClick={() => setIsJoinModalOpen(true)}>Join class</span>,
     },
   ];
 
-  const onFinish = (values: TClass) => {
+  const onFinishCreate = (values: TClass) => {
     console.log("Success:", values);
     createClassMutation.mutate(values);
+  };
+
+  const onFinishJoin = (values: any) => {
+    joinClassMutation.mutate(values);
   };
 
   return (
@@ -58,7 +71,7 @@ const CreateButton = () => {
         <Form
           name="basic"
           style={{ maxWidth: 600 }}
-          onFinish={onFinish}
+          onFinish={onFinishCreate}
           autoComplete="off"
           layout="vertical"
           form={form}
@@ -84,8 +97,52 @@ const CreateButton = () => {
               </Button>
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={createClassMutation.isPending}
+              >
                 Create
+              </Button>
+            </Form.Item>
+          </div>
+        </Form>
+      </Modal>
+
+      <Modal
+        title="Join class"
+        open={isJoinModalOpen}
+        onOk={() => setIsJoinModalOpen(false)}
+        onCancel={() => setIsJoinModalOpen(false)}
+        footer={null}
+      >
+        <Form
+          name="basic"
+          style={{ maxWidth: 600 }}
+          onFinish={onFinishJoin}
+          autoComplete="off"
+          layout="vertical"
+          form={form}
+        >
+          <Form.Item
+            label="Link"
+            name="link"
+            rules={[{ required: true, message: "Please input link!" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <div className="flex gap-4 justify-end">
+            <Form.Item>
+              <Button onClick={() => setIsJoinModalOpen(false)}>Cancel</Button>
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={joinClassMutation.isPending}
+              >
+                Join
               </Button>
             </Form.Item>
           </div>

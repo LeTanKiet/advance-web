@@ -4,7 +4,7 @@ import axiosClient from "../axiosClient";
 const PREFIX = "/auth";
 
 const authApi = {
-  signUp: (data: SignUpProps) => axiosClient.post(`${PREFIX}/register`, data),
+  signUp: (data: SignUpProps) => axiosClient.post(`${PREFIX}/sign-up`, data),
   login: (data: LoginProps) => axiosClient.post(`${PREFIX}/login`, data),
   updateProfile: (data: unknown) => axiosClient.put(`${PREFIX}/profile`, data),
   fetchCurrentUser: () => axiosClient.get(`${PREFIX}/me`),

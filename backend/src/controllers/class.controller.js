@@ -77,7 +77,6 @@ class ClassController {
       const {
         params: { id },
       } = req;
-      console.log('🚀 ~ file: class.controller.js:73 ~ ClassController ~ deleteClass ~ context:', context);
 
       const number = await Class.destroy({
         where: { id },
@@ -88,6 +87,36 @@ class ClassController {
       }
 
       return res.status(200).send({ message: 'Successfully' });
+    } catch (error) {
+      return res.status(500).send({ message: error.message || 'Internal server error' });
+    }
+  }
+
+  async joinClass(req, res) {
+    try {
+      const {
+        body: { link },
+        context: { userId },
+      } = req;
+
+      const classId = Number(link.slice(link.lastIndexOf('/') + 1));
+
+      const isJoined = await ClassUser.findOne({
+        where: {
+          classId,
+          userId,
+        },
+      });
+      if (!isJoined) {
+        await ClassUser.create({
+          userId,
+          classId,
+        });
+      }
+
+      const result = await Class.findByPk(classId);
+
+      return res.status(200).json(result);
     } catch (error) {
       return res.status(500).send({ message: error.message || 'Internal server error' });
     }
