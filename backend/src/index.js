@@ -6,6 +6,8 @@ import { useRoutes } from './routes/index.js';
 import useEncoded from './hooks/useEncoded.js';
 import { useHandlebars } from './hooks/useHandlebars.js';
 import cors from 'cors';
+import session from 'express-session';
+import passport from 'passport';
 
 app.use(
   cors({
@@ -14,6 +16,9 @@ app.use(
   }),
 );
 
+app.use(session({ secret: 'advance_web', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cookieParser());
 useHandlebars(app);
 useEncoded(app);

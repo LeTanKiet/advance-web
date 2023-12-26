@@ -56,6 +56,43 @@ class AuthController {
     }
   }
 
+  async loginGoogle(req, res) {
+    const profile = req.profile;
+    const name = profile.displayName;
+    const email = profile.emails[0].value;
+    const avatar = profile.photos[0].value;
+    const role = ROLES.student;
+
+    const existedUser = await User.findOne({ where: { email }, raw: true });
+    if (existedUser) {
+      const tokens = createToken(existedUser);
+      setCookies(res, tokens);
+      return res.redirect(`${process.env.CLIENT_URL}sso-success`);
+    }
+
+    const newUser = await User.create({
+      email,
+      role,
+    });
+
+    const tokens = createToken(newUser);
+    setCookies(res, tokens);
+
+    return res.redirect(`${process.env.CLIENT_URL}create-profile`);
+  }
+
+  async loginFacebook(req, res) {
+    const profile = req.profile;
+    console.log('🚀 ~ file: auth.controller.js:72 ~ AuthController ~ loginGoogle ~ profile:', profile);
+    // const name = profile.displayName;
+    // const email = profile.emails[0].value;
+    // const avatar = profile.photos[0].value;
+
+    // console.log('PROFILE: ', name, email, avatar);
+
+    res.redirect('/');
+  }
+
   async logout(req, res) {
     clearCookies(res);
     return res.status(200).send({ message: 'Success' });
