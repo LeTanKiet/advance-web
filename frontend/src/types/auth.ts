@@ -6,6 +6,7 @@ export type TUser = {
   password: string;
   role: Role;
   name: string;
+  pin?: string;
 };
 
 export type LoginProps = {
@@ -17,4 +18,5 @@ export type SignUpProps = {
   email: string;
   password: string;
   confirmPassword: string;
+  role?: string;
 };

@@ -9,7 +9,6 @@ import { classActions } from "../../redux/class/slice";
 const ClassList = () => {
   const dispatch = useAppDispatch();
   const classList = useAppSelector((state) => state.class.list);
-  console.log("🚀 ~ file: index.tsx:12 ~ ClassList ~ classList:", classList);
 
   const { data: classes } = useQuery({
     queryKey: ["classes"],
@@ -27,8 +26,9 @@ const ClassList = () => {
 
   return (
     <div className="mt-8 flex gap-4">
-      {classList.map((c) => (
+      {classList.map((c, index) => (
         <Link
+          key={index}
           to={`classes/${c.id}`}
           className="hover:cursor-pointer hover:shadow-md w-fit"
         >

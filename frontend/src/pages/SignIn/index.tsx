@@ -1,7 +1,7 @@
 import { Button, Form, Input } from "antd";
 import { LoginProps } from "../../types/auth";
-import { Link } from "react-router-dom";
-import { PUBLIC_ROUTES } from "../../routes/constants";
+import { Link, useNavigate } from "react-router-dom";
+import { PUBLIC_ROUTES, USER_ROUTES } from "../../routes/constants";
 import { useAppDispatch } from "../../hooks/redux";
 import authApi from "../../api/authApi";
 import { appActions } from "../../redux/app/slice";
@@ -9,14 +9,15 @@ import { useMutation } from "@tanstack/react-query";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
       dispatch(appActions.setUser(data));
+      navigate(USER_ROUTES.home);
     },
   });
-  console.log("🚀 ~ file: index.tsx:20 ~ SignIn ~ error:", error);
 
   const onFinish = (values: LoginProps) => {
     mutate(values);
@@ -64,6 +65,30 @@ const SignIn = () => {
             Login
           </Button>
         </Form.Item>
+
+        <div className="flex justify-center gap-8 my-4">
+          <a
+            href="http://localhost:5000/auth/login/google"
+            className="w-[48px] h-[48px] border border-solid border-slate-500 p-2 rounded-md hover:cursor-pointer"
+          >
+            <img
+              src="./google.png"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </a>
+
+          <a
+            href="http://localhost:5000/auth/login/facebook"
+            className="w-[48px] h-[48px] border border-solid border-slate-500 p-2 rounded-md hover:cursor-pointer"
+          >
+            <img
+              src="./facebook.png"
+              alt=""
+              className="w-full h-full object-cover"
+            />
+          </a>
+        </div>
 
         <div className="text-center">
           Didn't have an account?

@@ -24,7 +24,7 @@ function PrivateRoutes() {
     case Role.STUDENT:
       routes = userRoutes;
       break;
-    case Role.ADMIN:
+    case Role.TEACHER:
       routes = adminRoutes;
       break;
     default:

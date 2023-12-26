@@ -68,8 +68,8 @@ const ClassDetail = () => {
                 ?.filter(
                   (user) => currentClass && user.id === currentClass.owner
                 )
-                .map((user) => (
-                  <div className="flex items-center gap-4">
+                .map((user, index) => (
+                  <div key={index} className="flex items-center gap-4">
                     <Avatar size="large" icon={<UserOutlined />} />
                     <span>{user.email}</span>
                   </div>
