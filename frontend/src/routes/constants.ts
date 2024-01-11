@@ -12,7 +12,7 @@ export const USER_ROUTES = {
   classDetail: "/classes/:id",
 };
 
-export const ADMIN_PREFIX = "/admin";
-export const ADMIN_ROUTES = {
-  home: ADMIN_PREFIX,
+export const TEACHER_ROUTES = {
+  home: "/",
+  classDetail: "/classes/:id",
 };
