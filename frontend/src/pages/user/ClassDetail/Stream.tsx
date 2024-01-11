@@ -1,6 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React from "react";
+import UploadExcel from "./UploadExcel";
 
 interface StreamProps {
   currentClass: any;
@@ -29,6 +30,8 @@ const Stream = ({ currentClass }: StreamProps) => {
         <Avatar size="large" icon={<UserOutlined />} />
         <span>Announce something to your class</span>
       </div>
+
+      <UploadExcel />
     </div>
   );
 };
