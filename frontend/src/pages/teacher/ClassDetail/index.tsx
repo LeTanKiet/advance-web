@@ -18,9 +18,7 @@ const ClassDetail = () => {
     queryKey: ["users", currentClass?.id],
     queryFn: () => userApi.getAll(currentClass?.id || 0),
   });
-  const students = users?.filter(
-    (user) => user.role === Role.STUDENT && user.id !== currentClass?.owner
-  );
+  const students = users?.filter((user) => user.role === Role.STUDENT);
 
   const onChange = (key: string) => {
     console.log(key);

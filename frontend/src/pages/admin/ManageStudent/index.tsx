@@ -200,6 +200,7 @@ const ManageStudent = () => {
         onOk={() => setIsModalOpen(false)}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
+        destroyOnClose
       >
         <Form
           name="basic"

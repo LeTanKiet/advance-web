@@ -7,6 +7,7 @@ const GradeBody = ({ row }: any) => {
         <div
           style={{
             flexBasis: column.width,
+            flexGrow: 1,
           }}
         >
           {row[column.value]}

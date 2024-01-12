@@ -8,12 +8,17 @@ export const COLUMNS = [
   },
   {
     label: "Student Id",
-    value: "student_id",
-    width: 100,
+    value: "studentId",
+    width: 200,
   },
   {
     label: "Score",
     value: "score",
     width: 200,
+  },
+  {
+    label: "Actions",
+    value: "actions",
+    width: 100,
   },
 ];

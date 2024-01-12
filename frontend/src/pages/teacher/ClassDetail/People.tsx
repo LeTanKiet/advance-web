@@ -1,6 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React from "react";
+import { Role } from "../../../utils/enum";
 
 interface PeopleProps {
   users: any;
@@ -17,7 +18,7 @@ const People = ({ users, students, currentClass }: PeopleProps) => {
         </h2>
         <div className="mt-5 flex flex-col gap-4">
           {users
-            ?.filter((user) => currentClass && user.id === currentClass.owner)
+            ?.filter((user) => user.role === Role.TEACHER)
             .map((user) => (
               <div className="flex items-center gap-4">
                 <Avatar size="large" icon={<UserOutlined />} />

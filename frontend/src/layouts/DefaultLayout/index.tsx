@@ -9,7 +9,9 @@ const DefaultLayout = () => {
 
       <div className="flex gap-4">
         <SideBar />
-        <Outlet />
+        <div className="flex-1">
+          <Outlet />
+        </div>
       </div>
     </div>
   );

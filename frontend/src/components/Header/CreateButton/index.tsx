@@ -88,6 +88,7 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
         onOk={() => setIsCreateModalOpen(false)}
         onCancel={() => setIsCreateModalOpen(false)}
         footer={null}
+        destroyOnClose
       >
         <Form
           name="basic"
@@ -136,6 +137,7 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
         onOk={() => setIsJoinModalOpen(false)}
         onCancel={() => setIsJoinModalOpen(false)}
         footer={null}
+        destroyOnClose
       >
         <Form
           name="basic"
@@ -176,6 +178,7 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
         onOk={() => setIsInvitationLinkOpen(false)}
         onCancel={() => setIsInvitationLinkOpen(false)}
         footer={null}
+        destroyOnClose
       >
         <div
           className="flex gap-4 items-center h-[32px] mt-4"

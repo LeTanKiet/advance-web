@@ -7,6 +7,7 @@ const GradeHeader = () => {
         <div
           style={{
             flexBasis: column.width,
+            flexGrow: 1,
           }}
         >
           {column.label}
