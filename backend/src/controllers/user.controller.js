@@ -7,11 +7,9 @@ class UserController {
   async getAll(req, res) {
     try {
       const { classId } = req.query;
-      console.log('🚀 ~ file: user.controller.js:10 ~ UserController ~ getAll ~ classId:', classId);
 
       let users = [];
       if (classId) {
-        // Improve this code by using include
         const classUsers = await ClassUser.findAll({
           where: { classId },
           attributes: { exclude: ['id'] },
@@ -24,7 +22,9 @@ class UserController {
           },
         });
       } else {
-        users = await User.findAll();
+        users = await User.findAll({
+          order: [['id', 'DESC']],
+        });
       }
 
       return res.status(200).send(users);
@@ -55,11 +55,13 @@ class UserController {
         body,
       } = req;
 
-      await User.update(body, {
+      const response = await User.update(body, {
         where: { id },
+        returning: true,
+        raw: true,
       });
 
-      return res.status(200).send({ message: 'Successfully' });
+      return res.status(200).json(response[1][0]);
     } catch (error) {
       return res.status(500).send({ message: error.message || 'Internal server error' });
     }

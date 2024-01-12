@@ -16,3 +16,10 @@ export const TEACHER_ROUTES = {
   home: "/",
   classDetail: "/classes/:id",
 };
+
+export const ADMIN_ROUTES = {
+  home: "/",
+  manageClass: "/classes",
+  manageStudent: "/students",
+  classDetail: "/classes/:id",
+};

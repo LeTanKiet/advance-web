@@ -14,10 +14,5 @@ export default (sequelize) => {
     },
   );
 
-  ClassUser.associate = (models) => {
-    ClassUser.belongsTo(models.User, { as: 'user', foreignKey: 'userId', targetKey: 'id' });
-    ClassUser.belongsTo(models.Class, { as: 'class', foreignKey: 'classId', targetKey: 'id' });
-  };
-
   return ClassUser;
 };

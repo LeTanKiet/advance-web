@@ -9,7 +9,12 @@ import { classActions } from "../../../redux/class/slice";
 import { TClass } from "../../../types/class";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-const CreateButton = () => {
+interface CreateButtonProps {
+  hasInvitation?: boolean;
+  hasJoin?: boolean;
+}
+
+const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
   const [form] = useForm();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
@@ -42,19 +47,24 @@ const CreateButton = () => {
         <span onClick={() => setIsCreateModalOpen(true)}>Create class</span>
       ),
     },
-    {
+  ];
+
+  if (hasInvitation) {
+    items.push({
       key: "2",
       label: (
         <span onClick={() => setIsInvitationLinkOpen(true)}>
           Create invitation link
         </span>
       ),
-    },
-    {
+    });
+  }
+  if (hasJoin) {
+    items.push({
       key: "3",
       label: <span onClick={() => setIsJoinModalOpen(true)}>Join class</span>,
-    },
-  ];
+    });
+  }
 
   const onFinishCreate = (values: TClass) => {
     createClassMutation.mutate(values);

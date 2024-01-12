@@ -8,6 +8,9 @@ const classApi = {
   create: (body: TClass): Promise<TClass[]> =>
     axiosClient.post(`${PREFIX}`, body),
   joinClass: (body: any) => axiosClient.post(`${PREFIX}/join`, body),
+  updateClass: (id: string, body: any) =>
+    axiosClient.put(`${PREFIX}/${id}`, body),
+  deleteClass: (id: string) => axiosClient.delete(`${PREFIX}/${id}`),
 };
 
 export default classApi;

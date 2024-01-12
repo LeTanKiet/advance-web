@@ -47,6 +47,7 @@ class ClassController {
             [Op.or]: classUsers.map((d) => d.classId).concat(0),
           },
         },
+        raw: true,
       });
 
       return res.status(200).send(classes);
@@ -62,11 +63,13 @@ class ClassController {
         body,
       } = req;
 
-      await Class.update(body, {
+      const response = await Class.update(body, {
         where: { id },
+        returning: true,
+        raw: true,
       });
 
-      return res.status(200).send({ message: 'Successfully' });
+      return res.status(200).json(response[1][0]);
     } catch (error) {
       return res.status(500).send({ message: error.message || 'Internal server error' });
     }

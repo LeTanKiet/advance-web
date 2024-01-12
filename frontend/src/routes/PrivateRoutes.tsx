@@ -1,23 +1,22 @@
+import { useQuery } from "@tanstack/react-query";
 import { Navigate, Outlet, RouteObject, useLocation } from "react-router-dom";
+import authApi from "../api/authApi";
 import { useAppSelector } from "../hooks/redux";
-import { PUBLIC_ROUTES } from "./constants";
+import { Role } from "../utils/enum";
+import adminRoutes from "./AdminRoutes";
 import teacherRoutes from "./TeacherRoutes";
 import userRoutes from "./UserRoutes";
-import { Role } from "../utils/enum";
-import { useQuery } from "@tanstack/react-query";
-import authApi from "../api/authApi";
+import { PUBLIC_ROUTES } from "./constants";
 
 const ProtectedLayout = () => {
-  const user = useAppSelector((state) => state.app.user);
-  console.log("🚀 ~ ProtectedLayout ~ user:", user);
   const { pathname } = useLocation();
 
-  const { isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["me"],
     queryFn: authApi.fetchCurrentUser,
   });
 
-  if (!user && !Object.values(PUBLIC_ROUTES).includes(pathname))
+  if (!isLoading && !data && !Object.values(PUBLIC_ROUTES).includes(pathname))
     return <Navigate to={PUBLIC_ROUTES.signIn} />;
 
   return <Outlet />;
@@ -34,6 +33,9 @@ function PrivateRoutes() {
       break;
     case Role.TEACHER:
       routes = teacherRoutes;
+      break;
+    case Role.ADMIN:
+      routes = adminRoutes;
       break;
     default:
       routes = [...userRoutes, ...teacherRoutes];

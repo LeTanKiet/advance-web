@@ -7,6 +7,7 @@ export default (sequelize) => {
       title: { type: DataTypes.STRING, allowNull: false },
       description: { type: DataTypes.STRING, allowNull: true },
       owner: { type: DataTypes.INTEGER, allowNull: false },
+      isActive: { type: DataTypes.BOOLEAN, allowNull: true },
     },
     {
       tableName: 'classes',
@@ -14,10 +15,6 @@ export default (sequelize) => {
       underscored: true,
     },
   );
-
-  Class.associate = (models) => {
-    Class.hasMany(models.ClassUser, { as: 'classUsers', foreignKey: 'classId', targetKey: 'id' });
-  };
 
   return Class;
 };

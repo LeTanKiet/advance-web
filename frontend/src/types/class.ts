@@ -3,4 +3,5 @@ export type TClass = {
   title: string;
   description: string;
   owner?: number;
+  isActive: number;
 };

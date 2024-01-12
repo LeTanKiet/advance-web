@@ -14,7 +14,6 @@ const SignIn = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
-      console.log("🚀 ~ SignIn ~ data:", data);
       dispatch(appActions.setUser(data));
       navigate(USER_ROUTES.home);
     },
