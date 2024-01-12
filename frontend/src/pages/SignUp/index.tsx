@@ -8,10 +8,13 @@ import { useAppDispatch } from "../../hooks/redux";
 
 import { appActions } from "../../redux/app/slice";
 import { Role } from "../../utils/enum";
+import { useForm, useWatch } from "antd/es/form/Form";
 
 const SignUp = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [form] = useForm();
+  const role = useWatch("role", form);
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: authApi.signUp,
@@ -34,13 +37,14 @@ const SignUp = () => {
         onFinish={onFinish}
         autoComplete="off"
         layout="vertical"
+        form={form}
       >
         <Form.Item<SignUpProps>
           label="Email"
           name="email"
           rules={[{ required: true, message: "Please input your email!" }]}
         >
-          <Input />
+          <Input placeholder="Enter email" />
         </Form.Item>
 
         <Form.Item<SignUpProps>
@@ -48,7 +52,7 @@ const SignUp = () => {
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Enter password" />
         </Form.Item>
 
         <Form.Item<SignUpProps>
@@ -58,7 +62,7 @@ const SignUp = () => {
             { required: true, message: "Please input your confirm password!" },
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Confirm your password" />
         </Form.Item>
 
         <Form.Item
@@ -73,6 +77,18 @@ const SignUp = () => {
             <Radio value={Role.TEACHER}>Teacher</Radio>
           </Radio.Group>
         </Form.Item>
+
+        {role === Role.STUDENT && (
+          <Form.Item<SignUpProps>
+            label="Student ID"
+            name="studentId"
+            rules={[
+              { required: true, message: "Please input your student id!" },
+            ]}
+          >
+            <Input placeholder="Enter student id" />
+          </Form.Item>
+        )}
 
         {error && (
           <p className="text-red-500 mb-4">

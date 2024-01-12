@@ -9,7 +9,7 @@ const { User } = db.models;
 class AuthController {
   async signUp(req, res) {
     try {
-      const { email, password, role } = req.body;
+      const { email, password } = req.body;
 
       const existedUser = await User.findOne({ where: { email }, raw: true });
       if (existedUser) {
@@ -18,9 +18,8 @@ class AuthController {
 
       const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
       const newUser = await User.create({
-        email,
+        ...req.body,
         password: hashedPassword,
-        role,
       });
 
       const tokens = createToken(newUser);
@@ -171,7 +170,7 @@ class AuthController {
       user.update(req.body);
     }
 
-    return res.send({ message: 'Success' });
+    return res.status(200).json(user.dataValues);
   }
 }
 

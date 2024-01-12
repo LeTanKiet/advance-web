@@ -8,7 +8,7 @@ export default (sequelize) => {
       password: { type: DataTypes.STRING, allowNull: true },
       name: { type: DataTypes.STRING, allowNull: true },
       role: { type: DataTypes.STRING, allowNull: false },
-      isActive: { type: DataTypes.BOOLEAN, allowNull: true },
+      isActive: { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: true },
       studentId: { type: DataTypes.STRING, allowNull: true },
       avatar: { type: DataTypes.STRING, allowNull: true },
     },

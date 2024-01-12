@@ -50,7 +50,7 @@ const CreateProfile = () => {
           name="email"
           rules={[{ required: true, message: "Please input your email!" }]}
         >
-          <Input />
+          <Input placeholder="Enter email" />
         </Form.Item>
 
         <Form.Item<SignUpProps>
@@ -58,7 +58,7 @@ const CreateProfile = () => {
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Enter password" />
         </Form.Item>
 
         <Form.Item<SignUpProps>
@@ -68,7 +68,7 @@ const CreateProfile = () => {
             { required: true, message: "Please input your confirm password!" },
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Confirm your password" />
         </Form.Item>
 
         <Form.Item>

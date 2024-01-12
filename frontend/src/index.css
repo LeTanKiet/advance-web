@@ -10,4 +10,9 @@
 
 body {
   font-family: "Montserrat", sans-serif;
+  color: #3c4043;
+}
+
+:where(.css-dev-only-do-not-override-2i2tap).ant-form-item {
+  margin-bottom: 16px;
 }

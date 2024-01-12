@@ -11,12 +11,14 @@ import { classActions } from "../../../redux/class/slice";
 import { TClass } from "../../../types/class";
 import Search from "antd/es/input/Search";
 import _ from "lodash";
+import { useLocation } from "react-router-dom";
 
 const ManageClass = () => {
   const dispatch = useAppDispatch();
   const [currentClass, setCurrentClass] = useState<TClass>();
   const apiNotification = useContext(NotificationContext);
   const [searchValue, setSearchValue] = useState<string>("");
+  const { pathname } = useLocation();
 
   const { data: classes, refetch } = useQuery({
     queryKey: ["classes"],
@@ -130,7 +132,7 @@ const ManageClass = () => {
       sorter: (a: { owner: string }, b: { owner: string }) => {
         return a.owner.localeCompare(b.owner);
       },
-      render: (_: any, { owner }: any) => <span>{owner.name}</span>,
+      render: (_: any, { owner }: any) => <span>{owner?.name}</span>,
     },
     {
       title: "",
@@ -138,7 +140,11 @@ const ManageClass = () => {
       key: "action",
       width: 80,
       render: (_arg1: any, _arg2: any, index: number) => (
-        <Dropdown menu={{ items: items as any }} trigger={["click"]}>
+        <Dropdown
+          key={index}
+          menu={{ items: items as any }}
+          trigger={["click"]}
+        >
           <MoreOutlined
             className="cursor-pointer p-2 hover:bg-gray-200 rounded-md"
             onClick={() => setCurrentClass(classes?.[index])}
@@ -155,7 +161,7 @@ const ManageClass = () => {
 
         <div className="flex gap-4">
           <Search placeholder="Search" enterButton onChange={onSearch} />
-          <CreateButton />
+          <CreateButton hasCreate />
         </div>
       </div>
 

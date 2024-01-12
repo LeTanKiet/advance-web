@@ -3,6 +3,7 @@ import Home from "../pages/teacher/Home";
 import { TEACHER_ROUTES } from "./constants";
 import DefaultLayout from "../layouts/DefaultLayout";
 import ClassDetail from "../pages/teacher/ClassDetail";
+import UpdateProfile from "../pages/user/UpdateProfile";
 
 const teacherRoutes: RouteObject[] = [
   {
@@ -15,6 +16,10 @@ const teacherRoutes: RouteObject[] = [
       {
         element: <ClassDetail />,
         path: TEACHER_ROUTES.classDetail,
+      },
+      {
+        element: <UpdateProfile />,
+        path: TEACHER_ROUTES.profile,
       },
     ],
   },

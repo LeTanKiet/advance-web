@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
 import { USER_ROUTES } from "../../routes/constants";
+import { NotificationContext } from "../../contexts/notification";
 
 const PinConfirm = () => {
   const user = useAppSelector((state) => state.app.user);
@@ -11,11 +12,16 @@ const PinConfirm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
 
+  const apiNotification = useContext(NotificationContext);
+
   const [form] = useForm();
 
   const onFinish = (values: any) => {
     if (values.pin === user?.pin) {
       navigate(USER_ROUTES.home);
+      apiNotification.success({
+        message: "Sign up successfully",
+      });
     } else {
       setError("Your pin is not correct");
     }
@@ -37,7 +43,7 @@ const PinConfirm = () => {
           name="pin"
           rules={[{ required: true, message: "" }]}
         >
-          <Input />
+          <Input placeholder="Enter pin" />
         </Form.Item>
 
         {error && (

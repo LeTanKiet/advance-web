@@ -1,28 +1,37 @@
+import { Link, useLocation } from "react-router-dom";
 import CreateButton from "./CreateButton";
-import LogoutButton from "./LogoutButton";
+import Profile from "./Profile";
+import { useAppSelector } from "../../hooks/redux";
+import { Role } from "../../utils/enum";
 
 const Header = () => {
-  // const { pathname } = useLocation();
-
-  // const menus = [
-  //   {
-  //     key: USER_ROUTES.home,
-  //     label: <Link to={USER_ROUTES.home}>Home</Link>,
-  //   },
-  //   {
-  //     key: USER_ROUTES.landingPage,
-  //     label: <Link to={USER_ROUTES.landingPage}>Landing page</Link>,
-  //   },
-  // ];
+  const user = useAppSelector((state) => state.app.user);
+  const { pathname } = useLocation();
 
   return (
     <div className="flex justify-between mb-10">
-      <div></div>
-      {/* <Menu mode="horizontal" defaultSelectedKeys={[pathname]} items={menus} /> */}
+      <Link
+        to="/"
+        className="flex items-center gap-2  no-underline text-[#3c4043]"
+      >
+        <img
+          src="https://www.gstatic.com/classroom/logo_square_rounded.svg"
+          alt=""
+          className="w-10 h-10 object-cover"
+        />
+        <span className="text-[24px]">Classroom</span>
+      </Link>
 
       <div className="flex gap-2 items-center">
-        <CreateButton />
-        <LogoutButton />
+        {user?.role !== Role.ADMIN && (
+          <CreateButton
+            hasCreate={pathname === "/"}
+            hasJoin={pathname === "/"}
+            hasInvitation={pathname !== "/"}
+          />
+        )}
+
+        <Profile />
       </div>
     </div>
   );

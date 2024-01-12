@@ -7,19 +7,23 @@ export const PUBLIC_ROUTES = {
 
 export const USER_ROUTES = {
   home: "/",
-  landingPage: "/landing-page",
+  profile: "/profile",
 
   classDetail: "/classes/:id",
 };
 
 export const TEACHER_ROUTES = {
   home: "/",
+  profile: "/profile",
+
   classDetail: "/classes/:id",
 };
 
 export const ADMIN_ROUTES = {
-  home: "/",
-  manageClass: "/classes",
+  // home: "/",
+  profile: "/profile",
+
+  manageClass: "/",
   manageStudent: "/students",
   classDetail: "/classes/:id",
 };

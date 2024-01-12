@@ -6,16 +6,22 @@ import { useAppDispatch } from "../../hooks/redux";
 import authApi from "../../api/authApi";
 import { appActions } from "../../redux/app/slice";
 import { useMutation } from "@tanstack/react-query";
+import { useContext } from "react";
+import { NotificationContext } from "../../contexts/notification";
 
 const SignIn = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const apiNotification = useContext(NotificationContext);
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: authApi.login,
     onSuccess: (data) => {
       dispatch(appActions.setUser(data));
       navigate(USER_ROUTES.home);
+      apiNotification.success({
+        message: "Login successfully",
+      });
     },
   });
 
@@ -38,7 +44,7 @@ const SignIn = () => {
           name="email"
           rules={[{ required: true, message: "Please input your email!" }]}
         >
-          <Input />
+          <Input placeholder="Enter email" />
         </Form.Item>
 
         <Form.Item<LoginProps>
@@ -46,7 +52,7 @@ const SignIn = () => {
           name="password"
           rules={[{ required: true, message: "Please input your password!" }]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Enter password" />
         </Form.Item>
 
         {error && (

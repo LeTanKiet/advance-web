@@ -19,4 +19,5 @@ export type SignUpProps = {
   password: string;
   confirmPassword: string;
   role?: string;
+  studentId?: string;
 };

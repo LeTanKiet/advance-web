@@ -111,7 +111,7 @@ const Grade = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Fullname" />
+                  <Input placeholder="Enter fullname" />
                 </Form.Item>
 
                 <Form.Item
@@ -124,7 +124,7 @@ const Grade = () => {
                   label="StudentId"
                   name="studentId"
                 >
-                  <Input placeholder="Student id" />
+                  <Input placeholder="Enter student id" />
                 </Form.Item>
 
                 <Form.Item

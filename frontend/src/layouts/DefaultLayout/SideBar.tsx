@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { ADMIN_ROUTES } from "../../routes/constants";
 
 const MENUS = [
@@ -14,15 +14,19 @@ const MENUS = [
 
 const SideBar = () => {
   return (
-    <div className="min-w-[240px]">
+    <div className="min-w-[240px] flex flex-col gap-2">
       {MENUS.map((item) => (
-        <Link
+        <NavLink
           key={item.to}
           to={item.to}
-          className="px-4 py-3 hover:bg-slate-100 hover:cursor-pointer rounded-md text-[#000] no-underline block"
+          className={({ isActive }) =>
+            `px-4 py-3 ${
+              isActive ? "bg-gray-100" : ""
+            } hover:bg-gray-100 hover:cursor-pointer rounded-md text-[#000] no-underline block`
+          }
         >
           {item.label}
-        </Link>
+        </NavLink>
       ))}
     </div>
   );

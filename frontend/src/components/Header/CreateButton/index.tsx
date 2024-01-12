@@ -10,11 +10,16 @@ import { TClass } from "../../../types/class";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 interface CreateButtonProps {
+  hasCreate?: boolean;
   hasInvitation?: boolean;
   hasJoin?: boolean;
 }
 
-const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
+const CreateButton = ({
+  hasCreate,
+  hasInvitation,
+  hasJoin,
+}: CreateButtonProps) => {
   const [form] = useForm();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
@@ -40,14 +45,16 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
     },
   });
 
-  const items: MenuProps["items"] = [
-    {
+  const items: MenuProps["items"] = [];
+
+  if (hasCreate) {
+    items.push({
       key: "1",
       label: (
         <span onClick={() => setIsCreateModalOpen(true)}>Create class</span>
       ),
-    },
-  ];
+    });
+  }
 
   if (hasInvitation) {
     items.push({
@@ -105,11 +112,11 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
               { required: true, message: "Please input your class name!" },
             ]}
           >
-            <Input />
+            <Input placeholder="Enter class name" />
           </Form.Item>
 
           <Form.Item label="Description" name="description">
-            <Input />
+            <Input placeholder="Enter description" />
           </Form.Item>
 
           <div className="flex gap-4 justify-end">
@@ -152,7 +159,7 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
             name="link"
             rules={[{ required: true, message: "Please input link!" }]}
           >
-            <Input />
+            <Input placeholder="Enter class link" />
           </Form.Item>
 
           <div className="flex gap-4 justify-end">
@@ -164,6 +171,7 @@ const CreateButton = ({ hasInvitation, hasJoin }: CreateButtonProps) => {
                 type="primary"
                 htmlType="submit"
                 loading={joinClassMutation.isPending}
+                className="text-white"
               >
                 Join
               </Button>
