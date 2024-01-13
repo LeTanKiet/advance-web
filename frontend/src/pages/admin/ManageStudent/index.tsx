@@ -1,30 +1,20 @@
 import { MoreOutlined } from "@ant-design/icons";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button, Dropdown, Form, Input, Modal, Table } from "antd";
-import { useContext, useEffect, useState } from "react";
-import classApi from "../../../api/classApi";
-import userApi from "../../../api/userApi";
-import CreateButton from "../../../components/Header/CreateButton";
-import { NotificationContext } from "../../../contexts/notification";
-import { useAppDispatch } from "../../../hooks/redux";
-import { classActions } from "../../../redux/class/slice";
+import { useForm } from "antd/es/form/Form";
 import Search from "antd/es/input/Search";
 import _ from "lodash";
+import { useContext, useEffect, useState } from "react";
+import userApi from "../../../api/userApi";
+import { NotificationContext } from "../../../contexts/notification";
 import { Role } from "../../../utils/enum";
-import { useForm } from "antd/es/form/Form";
 
 const ManageStudent = () => {
-  const dispatch = useAppDispatch();
   const [currentUser, setCurrentUser] = useState<any>();
   const apiNotification = useContext(NotificationContext);
   const [searchValue, setSearchValue] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [form] = useForm();
-
-  const { data: classes } = useQuery({
-    queryKey: ["classes"],
-    queryFn: classApi.getAll,
-  });
 
   const { data: users, refetch } = useQuery({
     queryKey: ["users"],
@@ -102,7 +92,7 @@ const ManageStudent = () => {
             Unmap student id
           </span>
         ),
-        key: "1",
+        key: "2",
       }
     );
   }

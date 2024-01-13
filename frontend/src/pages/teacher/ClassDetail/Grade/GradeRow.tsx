@@ -3,11 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Dropdown, Input, InputNumber } from "antd";
 import _ from "lodash";
 import gradeApi from "../../../../api/gradeApi";
-import { COLUMNS } from "../../../../utils/constants";
 
-const GradeRow = ({ row }: any) => {
+const GradeRow = ({ row, columns, localData }: any) => {
   const { mutate } = useMutation({
-    mutationFn: (body: any) => gradeApi.update(Number(row.id), body),
+    mutationFn: (body: any) => gradeApi.updateScore(row.studentId, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["grades"] });
+    },
   });
   const queryClient = useQueryClient();
 
@@ -19,7 +21,12 @@ const GradeRow = ({ row }: any) => {
   });
 
   const handleChange = _.debounce((value, column) => {
+    const body = localData.find(
+      (d) => d.gradeName === column.value && d.studentId === row.studentId
+    );
     mutate({
+      ...body,
+      gradeName: column.value,
       [column.value]: value,
     });
   }, 400);
@@ -27,7 +34,10 @@ const GradeRow = ({ row }: any) => {
   const items = [
     {
       label: (
-        <span onClick={() => deleteMutation(row.id)} className="text-red-500">
+        <span
+          onClick={() => deleteMutation(row.studentId)}
+          className="text-red-500"
+        >
           Delete
         </span>
       ),
@@ -37,29 +47,8 @@ const GradeRow = ({ row }: any) => {
 
   const renderInput = (column: any) => {
     switch (column.value) {
-      case "score": {
-        return (
-          <InputNumber
-            min={1}
-            max={10}
-            defaultValue={Number(row[column.value])}
-            onChange={(value) => handleChange(value, column)}
-            className={`
-        w-[120px] text-textColor max-w-full bg-transparent rounded-lg border-none hover:!bg-bgNeutral focus:border focus:border-solid focus:!border-gray-500 focus:!shadow-none`}
-          />
-        );
-      }
-      case "actions": {
-        return (
-          <Dropdown menu={{ items }} trigger={["click"]}>
-            <MoreOutlined
-              className="cursor-pointer p-2 hover:bg-gray-200 rounded-md"
-              // onClick={() => setCurrentClass(classes?.[index])}
-            />
-          </Dropdown>
-        );
-      }
-      default: {
+      case "studentId":
+      case "fullname": {
         return (
           <Input
             defaultValue={row[column.value]}
@@ -69,12 +58,34 @@ const GradeRow = ({ row }: any) => {
           />
         );
       }
+      case "average": {
+        return <span>{row[column.value]}</span>;
+      }
+      case "actions": {
+        return (
+          <Dropdown menu={{ items }} trigger={["click"]}>
+            <MoreOutlined className="cursor-pointer p-2 hover:bg-gray-200 rounded-md" />
+          </Dropdown>
+        );
+      }
+      default: {
+        return (
+          <InputNumber
+            min={0}
+            max={10}
+            defaultValue={Number(row[column.value])}
+            onChange={(value) => handleChange(value, column)}
+            className={`
+        w-[120px] text-textColor max-w-full bg-transparent rounded-lg border-none hover:!bg-bgNeutral focus:border focus:border-solid focus:!border-gray-500 focus:!shadow-none`}
+          />
+        );
+      }
     }
   };
 
   return (
     <div className="flex-1 flex items-center">
-      {COLUMNS.map((column) => (
+      {columns.map((column: any) => (
         <div
           style={{
             flexBasis: column.width,

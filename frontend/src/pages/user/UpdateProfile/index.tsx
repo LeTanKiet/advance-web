@@ -36,7 +36,7 @@ const UpdateProfile = () => {
 
   return (
     <div className="py-8 px-10 rounded-[16px]">
-      <h2 className="mb-10">Update profile</h2>
+      <h2 className="mb-6 ">Your profile</h2>
 
       <Form
         name="basic"
@@ -53,11 +53,7 @@ const UpdateProfile = () => {
           <Input placeholder="Enter email" />
         </Form.Item>
 
-        <Form.Item
-          label="Name"
-          name="name"
-          rules={[{ required: true, message: "Please input your name!" }]}
-        >
+        <Form.Item label="Name" name="name">
           <Input placeholder="Enter name" />
         </Form.Item>
 
@@ -79,16 +75,18 @@ const UpdateProfile = () => {
           </p>
         )}
 
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="h-10 mt-2"
-            loading={isPending}
-          >
-            Save
-          </Button>
-        </Form.Item>
+        <div className="flex justify-end">
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="h-10 mt-2"
+              loading={isPending}
+            >
+              Save
+            </Button>
+          </Form.Item>
+        </div>
       </Form>
     </div>
   );

@@ -2,12 +2,13 @@ import { CopyOutlined, PlusOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { Button, Dropdown, Form, Input, MenuProps, Modal, Tooltip } from "antd";
 import { useForm } from "antd/es/form/Form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classApi from "../../../api/classApi";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { classActions } from "../../../redux/class/slice";
 import { TClass } from "../../../types/class";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { NotificationContext } from "../../../contexts/notification";
 
 interface CreateButtonProps {
   hasCreate?: boolean;
@@ -26,6 +27,8 @@ const CreateButton = ({
   const [isInvitationLinkOpen, setIsInvitationLinkOpen] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
+  const apiNotification = useContext(NotificationContext);
+
   const dispatch = useAppDispatch();
   const classList = useAppSelector((state) => state.class.list);
 
@@ -34,6 +37,9 @@ const CreateButton = ({
     onSuccess: (data) => {
       setIsCreateModalOpen(false);
       dispatch(classActions.setClassList([...classList, data]));
+      apiNotification.success({
+        message: "Create class successfully",
+      });
     },
   });
 
@@ -42,6 +48,9 @@ const CreateButton = ({
     onSuccess: (data) => {
       setIsJoinModalOpen(false);
       dispatch(classActions.setClassList([...classList, data]));
+      apiNotification.success({
+        message: "Join class successfully",
+      });
     },
   });
 

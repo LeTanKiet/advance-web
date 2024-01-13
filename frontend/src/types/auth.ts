@@ -7,6 +7,7 @@ export type TUser = {
   role: Role;
   name: string;
   pin?: string;
+  studentId?: string;
 };
 
 export type LoginProps = {

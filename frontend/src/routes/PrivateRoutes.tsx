@@ -7,6 +7,7 @@ import adminRoutes from "./AdminRoutes";
 import teacherRoutes from "./TeacherRoutes";
 import userRoutes from "./UserRoutes";
 import { PUBLIC_ROUTES } from "./constants";
+import BlockPage from "../pages/BlockPage";
 
 const ProtectedLayout = () => {
   const { pathname } = useLocation();
@@ -18,6 +19,10 @@ const ProtectedLayout = () => {
 
   if (!isLoading && !data && !Object.values(PUBLIC_ROUTES).includes(pathname))
     return <Navigate to={PUBLIC_ROUTES.signIn} />;
+
+  if (data && !data.isActive) {
+    return <BlockPage />;
+  }
 
   return <Outlet />;
 };

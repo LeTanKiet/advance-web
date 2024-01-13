@@ -1,19 +1,15 @@
 import { Outlet } from "react-router-dom";
 import Header from "../../components/Header";
 import SideBar from "./SideBar";
-import { useAppSelector } from "../../hooks/redux";
-import { Role } from "../../utils/enum";
 
 const DefaultLayout = () => {
-  const user = useAppSelector((state) => state.app.user);
-
   return (
-    <div className="p-10">
+    <div className="flex flex-col min-h-screen">
       <Header />
 
-      <div className="flex gap-4">
-        {user?.role === Role.ADMIN && <SideBar />}
-        <div className="flex-1">
+      <div className="flex gap-4 flex-1">
+        <SideBar />
+        <div className="flex-1 pr-4 pt-4">
           <Outlet />
         </div>
       </div>

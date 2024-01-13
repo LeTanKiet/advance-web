@@ -10,7 +10,7 @@ const ClassList = () => {
   const dispatch = useAppDispatch();
   const classList = useAppSelector((state) => state.class.list);
 
-  const { data: classes } = useQuery({
+  const { data: classes, isLoading } = useQuery({
     queryKey: ["classes"],
     queryFn: classApi.getAll,
   });
@@ -24,19 +24,21 @@ const ClassList = () => {
   if (!classes || classList?.length === 0)
     return <p className="text-center mt-4">No class found</p>;
 
+  if (isLoading) return null;
+
   return (
-    <div className="mt-8 flex gap-4">
+    <div className="flex gap-4 mt-4">
       {classList.map((c, index) => (
         <Link
           key={index}
           to={`classes/${c.id}`}
-          className="hover:cursor-pointer hover:shadow-md w-fit"
+          className="hover:cursor-pointer hover:shadow-md w-fit no-underline"
         >
           <Card
             title={
               <div className="text-white py-2">
-                <span>{c.title}</span>
-                <p className="font-normal">{c.description}</p>
+                <span className="text-[24px]">{c.title}</span>
+                <p className="font-light">{c.description}</p>
                 <span></span>
               </div>
             }
@@ -47,7 +49,13 @@ const ClassList = () => {
               backgroundSize: "cover",
             }}
           >
-            A super course
+            <div>
+              <img
+                src="https://static.vecteezy.com/system/resources/previews/005/051/481/original/schoolboy-learning-online-course-on-mobile-illustration-concept-flat-illustration-isolated-on-white-background-vector.jpg"
+                alt=""
+                className="w-full h-full object-cover"
+              />
+            </div>
           </Card>
         </Link>
       ))}

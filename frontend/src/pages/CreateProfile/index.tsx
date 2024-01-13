@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button, Form, Input } from "antd";
 import { SignUpProps } from "../../types/auth";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +8,13 @@ import authApi from "../../api/authApi";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { appActions } from "../../redux/app/slice";
 import { useForm } from "antd/es/form/Form";
+import { NotificationContext } from "../../contexts/notification";
 
 const CreateProfile = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.app.user);
   const navigate = useNavigate();
+  const apiNotification = useContext(NotificationContext);
 
   const [form] = useForm();
 
@@ -21,6 +23,9 @@ const CreateProfile = () => {
     onSuccess: (data) => {
       dispatch(appActions.setUser(data));
       navigate(USER_ROUTES.home);
+      apiNotification.success({
+        message: "Create account successfully",
+      });
     },
   });
 

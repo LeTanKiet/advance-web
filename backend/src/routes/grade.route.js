@@ -1,14 +1,17 @@
 import express from 'express';
 import gradeController from '../controllers/grade.controller.js';
-import { authentication } from '../middlewares/auth.js';
+import { authentication, checkTeacherPermission } from '../middlewares/auth.js';
 
 const gradeRoutes = () => {
   const router = express.Router();
 
   router.get('/', authentication, gradeController.getAll);
-  router.post('/', authentication, gradeController.create);
-  router.put('/:id', authentication, gradeController.update);
-  router.delete('/:id', authentication, gradeController.deleteGrade);
+  router.post('/', authentication, checkTeacherPermission, gradeController.create);
+  router.put('/:studentId', authentication, checkTeacherPermission, gradeController.updateScore);
+  router.put('/grade/:id', authentication, checkTeacherPermission, gradeController.update);
+  router.delete('/', authentication, checkTeacherPermission, gradeController.deleteGrade);
+
+  router.post('/review/:id', authentication, gradeController.review);
 
   return router;
 };

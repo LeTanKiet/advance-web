@@ -1,6 +1,7 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import React from "react";
+import { Role } from "../../../utils/enum";
 
 interface PeopleProps {
   users: any;
@@ -8,7 +9,7 @@ interface PeopleProps {
   currentClass: any;
 }
 
-const People = ({ users, students, currentClass }: PeopleProps) => {
+const People = ({ users, students }: PeopleProps) => {
   return (
     <div>
       <div>
@@ -17,8 +18,8 @@ const People = ({ users, students, currentClass }: PeopleProps) => {
         </h2>
         <div className="mt-5 flex flex-col gap-4">
           {users
-            ?.filter((user) => currentClass && user.id === currentClass.owner)
-            .map((user) => (
+            ?.filter((user: { role: Role }) => user.role === Role.TEACHER)
+            .map((user: any) => (
               <div className="flex items-center gap-4">
                 <Avatar size="large" icon={<UserOutlined />} />
                 <span>{user.email}</span>
@@ -33,12 +34,27 @@ const People = ({ users, students, currentClass }: PeopleProps) => {
         </h2>
         <div className="mt-5 flex flex-col gap-4">
           {students && students.length > 0 ? (
-            students.map((user) => (
-              <div className="flex items-center gap-4">
-                <Avatar size="large" icon={<UserOutlined />} />
-                <span>{user.email}</span>
-              </div>
-            ))
+            students.map(
+              (user: {
+                email:
+                  | string
+                  | number
+                  | boolean
+                  | React.ReactElement<
+                      any,
+                      string | React.JSXElementConstructor<any>
+                    >
+                  | Iterable<React.ReactNode>
+                  | React.ReactPortal
+                  | null
+                  | undefined;
+              }) => (
+                <div className="flex items-center gap-4">
+                  <Avatar size="large" icon={<UserOutlined />} />
+                  <span>{user.email}</span>
+                </div>
+              )
+            )
           ) : (
             <span>No student in this class</span>
           )}

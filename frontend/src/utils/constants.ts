@@ -2,8 +2,8 @@ export const SERVER_URL = import.meta.env.VITE_BASE_URL;
 
 export const COLUMNS = [
   {
-    label: "Name",
-    value: "name",
+    label: "Fullname",
+    value: "fullname",
     width: 200,
   },
   {
@@ -12,13 +12,13 @@ export const COLUMNS = [
     width: 200,
   },
   {
-    label: "Score",
-    value: "score",
-    width: 200,
+    label: "Average",
+    value: "average",
+    width: 100,
   },
   {
-    label: "Actions",
+    label: "",
     value: "actions",
-    width: 100,
+    width: 40,
   },
 ];

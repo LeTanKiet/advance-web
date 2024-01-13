@@ -13,7 +13,7 @@ const People = ({ users, students, currentClass }: PeopleProps) => {
   return (
     <div>
       <div>
-        <h2 className="font-semibold border-0 leading-[60px] border-b border-b-black border-solid">
+        <h2 className="font-semibold text-[28px] border-0 leading-[60px] border-b border-b-black border-solid">
           Teachers
         </h2>
         <div className="mt-5 flex flex-col gap-4">
@@ -29,7 +29,7 @@ const People = ({ users, students, currentClass }: PeopleProps) => {
       </div>
 
       <div className="mt-10">
-        <h2 className="font-semibold border-0 leading-[60px] border-b border-b-black border-solid">
+        <h2 className="font-semibold text-[28px] border-0 leading-[60px] border-b border-b-black border-solid">
           Students
         </h2>
         <div className="mt-5 flex flex-col gap-4">
