@@ -12,6 +12,7 @@ const gradeRoutes = () => {
   router.delete('/', authentication, checkTeacherPermission, gradeController.deleteGrade);
 
   router.post('/review/:id', authentication, gradeController.review);
+  router.post('/finalize/:classId', authentication, gradeController.finalize);
 
   return router;
 };

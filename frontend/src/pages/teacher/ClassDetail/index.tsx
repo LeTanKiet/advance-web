@@ -1,13 +1,12 @@
-import { Avatar, Tabs, TabsProps } from "antd";
-import { useAppSelector } from "../../../hooks/redux";
-import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { Tabs, TabsProps } from "antd";
+import { useParams } from "react-router-dom";
 import userApi from "../../../api/userApi";
-import { UserOutlined } from "@ant-design/icons";
+import { useAppSelector } from "../../../hooks/redux";
 import { Role } from "../../../utils/enum";
-import Stream from "./Stream";
-import People from "./People";
 import Grade from "./Grade";
+import People from "./People";
+import Stream from "./Stream";
 
 const ClassDetail = () => {
   const { id } = useParams();
@@ -19,10 +18,6 @@ const ClassDetail = () => {
     queryFn: () => userApi.getAll(currentClass?.id || 0),
   });
   const students = users?.filter((user) => user.role === Role.STUDENT);
-
-  const onChange = (key: string) => {
-    console.log(key);
-  };
 
   const items: TabsProps["items"] = [
     {
@@ -46,7 +41,7 @@ const ClassDetail = () => {
 
   return (
     <div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs defaultActiveKey="1" items={items} />
     </div>
   );
 };

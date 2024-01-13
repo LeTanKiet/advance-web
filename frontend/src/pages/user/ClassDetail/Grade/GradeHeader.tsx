@@ -1,6 +1,12 @@
 const GradeHeader = ({ columns }: any) => {
   return (
-    <div className="flex pl-6 bg-gray-100 py-3">
+    <div
+      className="flex pl-6 bg-gray-100 py-3"
+      style={{
+        borderTopLeftRadius: 8,
+        borderTopRightRadius: 8,
+      }}
+    >
       {columns.map((column) => (
         <div
           style={{

@@ -8,7 +8,6 @@ import { NotificationContext } from "../../contexts/notification";
 
 const PinConfirm = () => {
   const user = useAppSelector((state) => state.app.user);
-  console.log("🚀 ~ PinConfirm ~ user:", user);
   const navigate = useNavigate();
   const [error, setError] = useState("");
 

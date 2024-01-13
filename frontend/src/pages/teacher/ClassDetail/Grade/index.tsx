@@ -68,7 +68,6 @@ const Grade = () => {
   };
 
   const onFinishCreateGrade = (value: any) => {
-    console.log("VALUE: ", value);
     createMutation(
       { ...value, classId: id },
       {
@@ -119,16 +118,11 @@ const Grade = () => {
             return acc;
           }, {});
 
-          console.log(
-            "DATA : ",
-            data.filter((dd) => dd.studentId === d.studentId)
-          );
+
           const average = data
             .filter((dd) => dd.studentId === d.studentId)
-            .reduce((acc, curr) => acc + (curr.score * curr.scale) / 100, 0)
+            .reduce((acc, curr) => acc + ((curr.score || 0) * (curr.scale || 0)) / 100, 0)
             .toFixed(2);
-
-          console.log("DATA AVG: ", average);
 
           return { ...d, ...res, average };
         });
@@ -293,6 +287,7 @@ const Grade = () => {
         setIsEditGradeOpen={setIsEditGradeOpen}
         editingGrade={editingGrade}
         setEditingGrade={setEditingGrade}
+        localData={localData}
       />
 
       <SortableContainerComp onSortEnd={onSortEnd} useDragHandle>
@@ -312,6 +307,7 @@ const Grade = () => {
               icon={<PlusOutlined />}
               onClick={() => setIsCreateModalOpen(true)}
               type="primary"
+              className="mt-4"
             >
               Add student
             </Button>

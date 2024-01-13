@@ -40,7 +40,6 @@ class UserController {
       } = req;
 
       const user = await User.findByPk(id);
-      console.log('🚀 ~ file: user.controller.js:44 ~ UserController ~ getById ~ user:', user);
 
       return res.status(200).send({ message: 'Successfully' });
     } catch (error) {

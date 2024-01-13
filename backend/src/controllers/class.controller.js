@@ -24,7 +24,6 @@ class ClassController {
 
       return res.status(200).json(data);
     } catch (error) {
-      console.log('🚀 ~ file: class.controller.js:27 ~ ClassController ~ create ~ error:', error);
       return res.status(500).send({ message: 'Create class fail!' });
     }
   }

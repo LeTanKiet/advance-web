@@ -20,6 +20,9 @@ const gradeApi = {
 
   requestReview: (studentId: string): Promise<any> =>
     axiosClient.post(`${PREFIX}/review/${studentId}`),
+
+  finalize: (classId: number, gradeName: string): Promise<any> =>
+    axiosClient.post(`${PREFIX}/finalize/${classId}?gradeName=${gradeName}`),
 };
 
 export default gradeApi;

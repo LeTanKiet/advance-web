@@ -24,11 +24,11 @@ const Profile = () => {
 
   const items = [
     {
-      label: <Link to={USER_ROUTES.profile}>Update</Link>,
+      label: <Link to={USER_ROUTES.profile} className="inline-block min-w-[80px]">Profile</Link>,
       key: "0",
     },
     {
-      label: <span onClick={handleLogout}>Logout</span>,
+      label: <span onClick={handleLogout} className="inline-block min-w-[80px]" >Logout</span>,
       key: "1",
     },
   ];

@@ -121,7 +121,6 @@ const ManageClass = () => {
       dataIndex: "description",
       key: "description",
       sorter: (a: { description: string }, b: { description: string }) => {
-        console.log(a, b);
         return a.description.localeCompare(b.description);
       },
     },

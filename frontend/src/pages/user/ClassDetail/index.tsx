@@ -21,10 +21,6 @@ const ClassDetail = () => {
     (user) => user.role === Role.STUDENT && user.id !== currentClass?.owner
   );
 
-  const onChange = (key: string) => {
-    console.log(key);
-  };
-
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -47,7 +43,7 @@ const ClassDetail = () => {
 
   return (
     <div>
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs defaultActiveKey="1" items={items} />
     </div>
   );
 };

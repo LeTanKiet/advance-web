@@ -3,6 +3,7 @@ import CreateButton from "./CreateButton";
 import Profile from "./Profile";
 import { useAppSelector } from "../../hooks/redux";
 import { Role } from "../../utils/enum";
+import NotificationIcon from "./NotificationIcon";
 
 const Header = () => {
   const user = useAppSelector((state) => state.app.user);
@@ -37,6 +38,7 @@ const Header = () => {
             />
           )}
 
+        <NotificationIcon />
         <Profile />
       </div>
     </div>

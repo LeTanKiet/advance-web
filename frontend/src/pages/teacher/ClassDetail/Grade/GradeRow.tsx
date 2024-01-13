@@ -3,8 +3,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Dropdown, Input, InputNumber } from "antd";
 import _ from "lodash";
 import gradeApi from "../../../../api/gradeApi";
+import { useParams } from "react-router-dom";
 
 const GradeRow = ({ row, columns, localData }: any) => {
+  const {id} = useParams();
+  
   const { mutate } = useMutation({
     mutationFn: (body: any) => gradeApi.updateScore(row.studentId, body),
     onSuccess: () => {
@@ -22,12 +25,13 @@ const GradeRow = ({ row, columns, localData }: any) => {
 
   const handleChange = _.debounce((value, column) => {
     const body = localData.find(
-      (d) => d.gradeName === column.value && d.studentId === row.studentId
+      (d) => d.gradeName === column.value && d.scale
     );
     mutate({
       ...body,
       gradeName: column.value,
       [column.value]: value,
+      classId: id
     });
   }, 400);
 

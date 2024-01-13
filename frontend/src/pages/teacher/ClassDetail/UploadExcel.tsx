@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as XLSX from "xlsx";
 
 const UploadExcel = () => {
@@ -7,10 +7,6 @@ const UploadExcel = () => {
 
   // submit state
   const [excelData, setExcelData] = useState(null);
-  console.log(
-    "🚀 ~ file: UploadExcel.tsx:10 ~ UploadExcel ~ excelData:",
-    excelData
-  );
 
   // onchange event
   const handleFile = (e) => {

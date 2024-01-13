@@ -1,6 +1,6 @@
 import db from '../models/index.js';
 
-const { Grade } = db.models;
+const { Grade, Notification } = db.models;
 
 class GradeController {
   async getAll(req, res) {
@@ -36,7 +36,15 @@ class GradeController {
 
   async create(req, res) {
     try {
-      const data = await Grade.create(req.body);
+      const existedGrade = await Grade.findOne({
+        where: {
+          classId: req.body.classId
+        },
+        raw: true
+      })
+      const data = await Grade.create({...req.body, 
+        gradeName: req.body.gradeName || existedGrade.gradeName, 
+        scale: req.body.scale || existedGrade.scale});
       return res.status(201).json(data);
     } catch (error) {
       return res.status(500).send({ message: error.message || 'Internal server error' });
@@ -54,6 +62,7 @@ class GradeController {
         where: {
           studentId,
           gradeName: body.gradeName,
+          classId: body.classId
         },
       });
 
@@ -112,7 +121,6 @@ class GradeController {
         query: { studentId, gradeName },
       } = req;
 
-      console.log('🚀 ~ GradeController ~ deleteGrade ~ studentId:', studentId, gradeName);
       if (studentId) {
         await Grade.destroy({
           where: { studentId },
@@ -147,6 +155,40 @@ class GradeController {
       );
 
       return res.status(200).json(response[1][0]);
+    } catch (error) {
+      return res.status(500).send({ message: error.message || 'Internal server error' });
+    }
+  }
+
+  async finalize(req, res) {
+    try {
+      const {
+        params: { classId },
+        query: { gradeName },
+      } = req;
+
+      const [_, response] = await Grade.update(
+        {
+          isMarked: true,
+        },
+        {
+          where: {
+            classId,
+            gradeName,
+          },
+          returning: true,
+          raw: true,
+        },
+      );
+
+      const newNotification = response.map((r) => ({
+        classId,
+        studentId: r.studentId,
+        description: `${gradeName} was finalized.`,
+      }));
+      await Notification.bulkCreate(newNotification);
+
+      return res.status(200).send({ message: 'Success' });
     } catch (error) {
       return res.status(500).send({ message: error.message || 'Internal server error' });
     }

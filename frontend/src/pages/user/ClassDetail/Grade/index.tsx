@@ -64,16 +64,10 @@ const Grade = () => {
             return acc;
           }, {});
 
-          console.log(
-            "DATA : ",
-            data.filter((dd) => dd.studentId === d.studentId)
-          );
           const average = data
             .filter((dd) => dd.studentId === d.studentId)
             .reduce((acc, curr) => acc + (curr.score * curr.scale) / 100, 0)
             .toFixed(2);
-
-          console.log("DATA AVG: ", average);
 
           return { ...d, ...res, average };
         });
